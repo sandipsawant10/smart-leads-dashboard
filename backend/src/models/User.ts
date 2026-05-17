@@ -40,22 +40,24 @@ const userSchema = new Schema<IUserDocument>(
   { timestamps: true },
 );
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
-})
+});
 
-userSchema.methods.comparePassword = async function(candidate: string): Promise<boolean> {
+userSchema.methods.comparePassword = async function (
+  candidate: string,
+): Promise<boolean> {
   return bcrypt.compare(candidate, this.password);
 };
 
-userSchema.set('toJSON', {
-  transform: (_doc, ret) => {
+userSchema.set("toJSON", {
+  transform: (_doc, ret: any) => {
     delete ret.password;
     return ret;
-  }
-})
+  },
+});
 
-export default mongoose.model<IUserDocument>('User',userSchema);
+export default mongoose.model<IUserDocument>("User", userSchema);

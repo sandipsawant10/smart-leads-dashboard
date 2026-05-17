@@ -191,10 +191,11 @@ export const exportLeadsCSV = asyncHandler(
       new Date(l.createdAt).toLocaleDateString(),
     ]);
 
+    const escapeCsvCell = (value: unknown): string =>
+      `"${String(value).replace(/"/g, '""')}"`;
+
     const csvContent = [headers, ...rows]
-      .map((row) =>
-        row.map((cell) => `${String(cell).replace(/"/g, '""')}"`).join(","),
-      )
+      .map((row) => row.map(escapeCsvCell).join(","))
       .join("\n");
 
     res.setHeader("Content-Type", "text/csv");

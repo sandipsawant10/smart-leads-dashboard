@@ -9,7 +9,8 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node"],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["index.ts", "src/**/*.ts"],
   "exclude": ["dist", "node_modules"]

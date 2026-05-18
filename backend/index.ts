@@ -13,21 +13,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Configure CORS to allow local and deployed frontend origins.
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  process.env.FRONTEND_URL,
-  "https://smart-leads-dashboard-flame-chi.vercel.app",
-].filter(Boolean) as string[];
-
+// Temporarily allow all origins by echoing the request origin. This enables deployed
+// frontends to call the API during testing. For production, restrict this to
+// specific origins and set FRONTEND_URL in Render.
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow non-browser requests (like curl, server-to-server) when origin is undefined
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error("CORS policy: Origin not allowed"));
-    },
+    origin: true, // reflect request origin
     credentials: true,
   }),
 );

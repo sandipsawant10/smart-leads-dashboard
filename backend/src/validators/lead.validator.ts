@@ -23,7 +23,7 @@ export const createLeadValidator = [
   body("source")
     .notEmpty()
     .withMessage("Source is required")
-    .isIn(["Website", "Referral", "Social Media"])
+    .isIn(["Website", "Instagram", "Referral"])
     .withMessage("Invalid source value"),
 
   body("notes")
@@ -52,7 +52,7 @@ export const updateLeadValidator = [
 
   body("source")
     .optional()
-    .isIn(["Website", "Referral", "Instagram"])
+    .isIn(["Website", "Instagram", "Referral"])
     .withMessage("Invalid source value"),
 
   body("notes")
